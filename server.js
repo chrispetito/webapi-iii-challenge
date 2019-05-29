@@ -8,7 +8,7 @@ const server = express();
 server.use(express.json());
 
 
-// server.use('/api/posts', logger, postRouter)
+server.use('/api/posts', logger, postRouter)
 server.use('/api/users', logger, userRouter)
 
 //custom middleware
