@@ -1,15 +1,20 @@
 const express = require('express');
 
+const userRouter = require('./users/userRouter');
+const postRouter = require('./posts/postRouter');
+
 const server = express();
 
-server.get('/', logger, (req, res) => {
-  res.send(`<h2>Let's write some middleware!</h2>`)
-});
+server.use(express.json());
+
+
+// server.use('/api/posts', logger, postRouter)
+server.use('/api/users', logger, userRouter)
 
 //custom middleware
 
 function logger(req, res, next) {
-  console.log(`This is a ${req.method} request at ${req.originalUrl} URL, performed at ${Date.now()}`)
+  console.log(`This is a ${req.method} request at the ${req.originalUrl} URL, performed at ${Date.now()}`)
   next();
 };
 
