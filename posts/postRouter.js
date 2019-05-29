@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
     );
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", validatePostId, (req, res) => {
   const { id } = req.params;
   db.getById(id)
     .then(response => res.status(201).json(response))
@@ -20,7 +20,7 @@ router.get("/:id", (req, res) => {
     );
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", validatePostId, (req, res) => {
   const { id } = req.params;
   db.remove(id)
     .then(response => res.status(201).json(response))
@@ -29,7 +29,7 @@ router.delete("/:id", (req, res) => {
     );
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", validatePostId, (req, res) => {
   const { id } = req.params;
   db.update(id, req.body)
     .then(response => res.status(201).json(response))
@@ -38,6 +38,15 @@ router.put("/:id", (req, res) => {
 
 // custom middleware
 
-function validatePostId(req, res, next) {}
+function validatePostId(req, res, next) {
+    const { id } = req.params;
+    const post = db.getById(id);
+    if (post) {
+      req.post = post;
+      next();
+    } else {
+      res.status(400).json({ message: "invalid post id" });
+    }
+  }
 
 module.exports = router;
