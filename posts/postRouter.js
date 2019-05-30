@@ -38,9 +38,9 @@ router.put("/:id", validatePostId, (req, res) => {
 
 // custom middleware
 
-function validatePostId(req, res, next) {
+async function validatePostId(req, res, next) {
     const { id } = req.params;
-    const post = db.getById(id);
+    const post = await db.getById(id);
     if (post) {
       req.post = post;
       next();
