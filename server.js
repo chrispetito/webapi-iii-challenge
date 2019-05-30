@@ -12,7 +12,7 @@ server.use('/api/posts', logger, postRouter)
 server.use('/api/users', logger, userRouter)
 
 server.get('/', (req, res) => {
-  res.json('Welcome to my Web API III Challenge');
+  res.json({message: 'Welcome to my Web API III Challenge', MOTD: 'Hello from my Web API III Challenge'});
 })
 
 //custom middleware
